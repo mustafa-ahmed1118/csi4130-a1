@@ -119,7 +119,7 @@ _Expected output for question 2._
 - [WebGL Documentation - Creating 3D objects using WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Creating_3D_objects_using_WebGL)
 - [Three.js Documentation - Installation Guide](https://threejs.org/docs/index.html#manual/en/introduction/Installation)
 - [Three.js Documentation - CircleGeometry](https://threejs.org/docs/#api/en/geometries/CircleGeometry)
-- [Dat GUI Installation] (https://sbcode.net/threejs/dat-gui/)
+- [Dat GUI Installation](https://sbcode.net/threejs/dat-gui/)
 - CSI41310 Lab 1
 - CSI4130 Lab 2
 - ChatGPT for identifying bugs - further indicated in code
