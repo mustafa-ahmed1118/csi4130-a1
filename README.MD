@@ -44,7 +44,7 @@ A1_300242013
 |       |   tetrahedron.fs
 |       |   tetrahedron.vs
 |       |
-└───Q2C
+└───Q2
     │   index.html
     │   tetrahedron_three.js
 ```
