@@ -68,6 +68,11 @@ A1_300242013
    npm install --save-dev vite
    ```
 
+3. Dat GUI
+   ```bash
+   npm install dat.gui --save-dev
+   ```
+
 ## Question 1: WebGL Octahedrons
 
 The solution to this problem is in the `Q1/` directory. In Question 1, three octahedrons were animated to spin individually and as a group around the center of the frustum. This solution was heavily inspired by Lab 1. With that in mind, it was adapted to animate the three octahedrons using a list of three VAO objects.<br>
@@ -114,6 +119,7 @@ _Expected output for question 2._
 - [WebGL Documentation - Creating 3D objects using WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Creating_3D_objects_using_WebGL)
 - [Three.js Documentation - Installation Guide](https://threejs.org/docs/index.html#manual/en/introduction/Installation)
 - [Three.js Documentation - CircleGeometry](https://threejs.org/docs/#api/en/geometries/CircleGeometry)
+- [Dat GUI Installation] (https://sbcode.net/threejs/dat-gui/)
 - CSI41310 Lab 1
 - CSI4130 Lab 2
 - ChatGPT for identifying bugs - further indicated in code
