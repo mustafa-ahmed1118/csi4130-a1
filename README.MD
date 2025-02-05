@@ -90,7 +90,7 @@ Admittedly, the animation is slow. I encountered issues fixing it, but the rotat
    ```bash
    python -m http.server --bind 127.0.0.1
    ```
-3. Visit`the following link:
+3. Visit the following link:
    ```bash
    http://127.0.0.1:8000/Q1/tetrahedrons.html
    ```
