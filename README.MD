@@ -96,11 +96,11 @@ _Expected output for question 1._
 
 ## Question 2: Three.js Octahedrons
 
-The solution to this problem is in the `Q2/` directory. Question 2 is similar to the first. It animates the three octahedrons using the built-in Circle geometry with a circumference of 8 to simulate an octahedron.<br>
+The solution to this problem is in the `Q2/` directory. Question 2 is similar to the first. It animates the three octahedrons using the built-in Circle geometry with a circumference of 8 to simulate an octahedron. The vertices of each octahedron has a random shade of its respective color assigned to it to make the octahedron shape more apparent. It makes for a more gem-like reflection effect on each octahedron<br>
 
 The solution takes heavy inspiration from Lab 2, particularly in the use of the Three.js Scene Graph. Similar to Lab 2, the octahedrons are organized into a group called `tetGroup` and further enclosed in a rotation group called `tetRotGroup`. These groups are later used in the `render()` function to rotate the entire group of octahedrons around the center of the frustum while they each spin individually.<br>
 
-Speed controls are also present as in Lab 2; however, now there is a button to reverse the direction of the animation. Additionally, the animation can be reversed using the speed slider.<br>
+The animation speed controls of lab 2 have been adjusted. It no longer controls the speed of the enire scene graph animation. There are now individual sliders to adjust the speed and direction at which each octahedron spins as well as the speed and direction the entire rotation group spins.<br>
 
 ### How to Run Question 2:
 
