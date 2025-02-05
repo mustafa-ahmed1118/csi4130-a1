@@ -12,7 +12,7 @@
 import * as THREE from "three";
 import { GUI } from "dat.gui";
 
-// initialization of Three.js
+// Initialization of Three.js
 function init() {
 
     //WebGL Setup
@@ -23,45 +23,62 @@ function init() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	container.appendChild(renderer.domElement);
 
-	// Begin scene graph setup 
-	var scene = new THREE.Scene();
-    
-    //define the tetrahedron group and their respective rotation group
+
+    // Begin scene graph setup
+    var scene = new THREE.Scene();
+
+    // Define the tetrahedron group and their respective rotation group
     var tetRotGroup = new THREE.Group();
     scene.add(tetRotGroup);
     var tetGroup = new THREE.Group();
 
-    
-    //define the three tetrahedrons
-    var tetGeomoetry = new THREE.CircleGeometry(8,8);//universal tetrahedron shape
+    // Function to generate per-vertex shades of a base color simulting a gem-like reflection
+    function generateShadedColors(baseColor, vertexCount) {
+        let colors = [];
+        for (let i = 0; i < vertexCount; i++) {
+            let shadeFactor = 0.7 + Math.random() * 0.3; // Random shade between 70% and 100%
+            colors.push(baseColor[0] * shadeFactor, baseColor[1] * shadeFactor, baseColor[2] * shadeFactor);
+        }
+        return new Float32Array(colors);
+    }
 
-    //define the red tetrahedron
-    var redMaterial = new THREE.MeshBasicMaterial({ color: "red" });
-    var redTet = new THREE.Mesh(tetGeomoetry, redMaterial);
-    redTet.position.set(-8,8,0)
-    tetGroup.add(redTet);
-    
-    //define green tetrahedron
-    var greenMaterial = new THREE.MeshBasicMaterial({ color: "green" });
-    var greenTet = new THREE.Mesh(tetGeomoetry, greenMaterial);
-    greenTet.position.set(8,8,0)
-    tetGroup.add(greenTet);
+    // Universal tetrahedron shape with per-vertex colors
+    function createTetrahedron(position, baseColor) {
+        let tetGeometry = new THREE.CircleGeometry(8, 8).toNonIndexed(); // Ensure it's non-indexed
+        let vertexCount = tetGeometry.attributes.position.count;
 
-    var yellowMaterial = new THREE.MeshBasicMaterial({ color: "yellow" });
-    var yellowTet = new THREE.Mesh(tetGeomoetry, yellowMaterial);
-    yellowTet.position.set(0,-7,0)
-    tetGroup.add(yellowTet);
+        // Apply per-vertex colors
+        tetGeometry.setAttribute('color', new THREE.BufferAttribute(generateShadedColors(baseColor, vertexCount), 3));
+
+        // Define the material with per-vertex color enabled
+        let vertexColorMaterial = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide });
+
+        let tetrahedron = new THREE.Mesh(tetGeometry, vertexColorMaterial);
+        tetrahedron.position.set(...position);
+        return tetrahedron;
+    }
+
+    // Define the tetrahedrons with gem-like shading
+    let redTet = createTetrahedron([-8, 8, 0], [1.0, 0.0, 0.0]);    // Red shades
+    let greenTet = createTetrahedron([8, 8, 0], [0.0, 1.0, 0.0]);   // Green shades
+    let yellowTet = createTetrahedron([0, -7, 0], [1.0, 1.0, 0.0]); // Yellow shades
+
+    // Add tetrahedrons to the group
+    tetGroup.add(redTet, greenTet, yellowTet);
 
     tetRotGroup.add(tetGroup);
     scene.add(tetRotGroup);
+
+
+
  
-	// calcaulate aspectRatio
+	//Calcaulate aspectRatio
 	var aspectRatio = window.innerWidth / window.innerHeight;
 	var width = 40;
     var height = width / aspectRatio;
 
 
-	//setup orthographic camera
+	//Setup orthographic camera
     const camera = new THREE.OrthographicCamera(
         -width,   // left
          width,   // right
@@ -71,47 +88,51 @@ function init() {
         1000      // far
     );
     
-	// position the camera back and point to the center of the scene
+	//Position the camera back and point to the center of the scene
 	camera.position.set(0,0, 100); // Move it back
     camera.lookAt(new THREE.Vector3(0, 0, 0)); // Look at the scene center
 
-	// render the scene
+	// Render the scene
 	renderer.render(scene, camera);
 
-    // setup the control gui
+    // Setup the control GUI
     var controls = new (function () {
-        this.speed = 3; // Start with a lower speed
-        this.reverseSpeed = function () {
-            this.speed *= -1; // Reverse the speed (multiply by -1)
-        };
-        this.redraw = function () {}; // Function to trigger redrawing
+        this.groupSpeed = 3; // Speed for the whole group
+        this.redSpeed = 3;    // Speed for the red tetrahedron
+        this.greenSpeed = 3;  // Speed for the green tetrahedron
+        this.yellowSpeed = 3; // Speed for the yellow tetrahedron
     })();
 
-    // Create the GUI for controlling speed and reversing direction
+    // Create the GUI for controlling speeds
     var gui = new GUI();
-    gui.add(controls, "speed", -10, 10); // Speed range from -1 to 1 for controlled rotation
-    gui.add(controls, "reverseSpeed").name("Reverse Speed").onChange(controls.redraw); // Reverse speed button
+    gui.add(controls, "groupSpeed", -10, 10).name("Group Spin");
+    gui.add(controls, "redSpeed", -10, 10).name("Red Speed");
+    gui.add(controls, "greenSpeed", -10, 10).name("Green Speed");
+    gui.add(controls, "yellowSpeed", -10, 10).name("Yellow Speed");
 
-    // Call the render function
-    render();
+    // Render function with updated rotation logic
     function render() {
-        // render using requestAnimationFrame - register function
         requestAnimationFrame(render);
 
-        var speed = controls.speed; // Get the speed value from the GUI
+        var groupSpeed = controls.groupSpeed * Math.PI / 180;
+        var redSpeed = controls.redSpeed * Math.PI / 180;
+        var greenSpeed = controls.greenSpeed * Math.PI / 180;
+        var yellowSpeed = controls.yellowSpeed * Math.PI / 180;
+
         var axis = new THREE.Vector3(0, 0, 1); // Rotation around the Z-axis
 
-        // Rotate the whole tetrahedron group around the Z-axis
-        tetRotGroup.rotateOnAxis(axis, -0.3 * speed * Math.PI / 180); // Smaller rotation per frame
+        // Rotate the whole tetrahedron group
+        tetRotGroup.rotateOnAxis(axis, -0.3 * groupSpeed);
 
-        // Rotate each individual tetrahedron around their Z-axis with controlled speed
-        redTet.rotation.z = (redTet.rotation.z + 1 * speed * Math.PI / 180); // Slower rotation speed
-        greenTet.rotation.z = (greenTet.rotation.z + 1 * speed * Math.PI / 180);
-        yellowTet.rotation.z = (yellowTet.rotation.z + 1 * speed * Math.PI / 180);
+        // Rotate individual tetrahedrons
+        redTet.rotation.z += redSpeed;
+        greenTet.rotation.z += greenSpeed;
+        yellowTet.rotation.z += yellowSpeed;
 
-        // Render the scene with the camera
+        // Render the scene
         renderer.render(scene, camera);
     }
+    render();
 }
 
 
