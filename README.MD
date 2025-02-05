@@ -86,10 +86,15 @@ Admittedly, the animation is slow. I encountered issues fixing it, but the rotat
 ### How to Run Question 1:
 
 1. Open your command line and navigate to the project directory.
-2. navigate further to: `A1_300242013/Q1`.
-3. run the project in a local server using: `python -m http.server --bind 127.0.0.1`.
-4. Visit `http://127.0.0.1:8000/`.
-5. In the locally hosted directoy, open the `tetrahedrons.html` file to see the animation
+2. run the project in a local server using:
+   ```bash
+   python -m http.server --bind 127.0.0.1
+   ```
+3. Visit`the following link:
+   ```bash
+   http://127.0.0.1:8000/Q1/tetrahedrons.html
+   ```
+4. View the animation and kill the server with `CTRL + C` in your command line when done.
 
 ![alt text](./Images/Q1_Screenshot.png)
 _Expected output for question 1._
@@ -104,12 +109,12 @@ The animation speed controls of lab 2 have been adjusted. It no longer controls 
 
 ### How to Run Question 2:
 
-1. Using your command line navigate to the project folder and into the `A1_300242013/Q2` directory.
-2. Run the project in a localhost server using the following command:
+1. From the top of the project directory run Q2 with:
    ```bash
-   npx vite
+   npx vite ./Q2
    ```
-3. Visit the link provided to see the animation. For example: `http://localhost:5173/`
+2. Visit the link provided to see the animation. For example: `http://localhost:5173/`.
+3. Kill the server with `CTRL + C` in your command line when done.
 
 ![alt text](./Images/Q2_Screenshot.png)
 _Expected output for question 2._
