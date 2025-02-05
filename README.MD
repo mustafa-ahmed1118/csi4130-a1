@@ -21,7 +21,7 @@ Visit the GitHib Repository: [csi4130-a2](https://github.com/mustafa-ahmed1118/c
 ## Project File Structure:
 
 ```
-A1_300242013
+csi4130-a1
 │   README.md
 |
 └───Images
